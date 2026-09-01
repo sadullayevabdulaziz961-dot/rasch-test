@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologiya testi</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 50px 10px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 35px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            border: none;
+            border-radius: 10px;
+            background: #2481cc;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Biologiya testi</h1>
+
+        <input
+            type="text"
+            id="testCode"
+            placeholder="Test kodini kiriting"
+        >
+
+        <button onclick="startTest()">
+            TESTNI BOSHLASH
+        </button>
+
+    </div>
+
+    <script>
+        function startTest() {
+            let code = document.getElementById("testCode").value;
+
+            if (code.trim() === "") {
+                alert("Test kodini kiriting!");
+                return;
+            }
+
+            alert("Kod qabul qilindi!");
+        }
+    </script>
+
+</body>
+</html>
