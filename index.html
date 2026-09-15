@@ -172,7 +172,7 @@
 
         <button
             type="button"
-            onclick="alert('ishlayapti')"
+            onclick="startTest()"
         >
             TESTNI BOSHLASH
         </button>
@@ -374,8 +374,7 @@ let userAnswers = [];
 function startTest() {
 
 
-    const code =
-        document
+    const code = document
         .getElementById("testCode")
         .value
         .trim();
@@ -383,8 +382,7 @@ function startTest() {
 
     if (code === "") {
 
-        alert(
-            "Test kodini kiriting!"
+        alert("Test kodini kiriting!"
         );
 
         return;
