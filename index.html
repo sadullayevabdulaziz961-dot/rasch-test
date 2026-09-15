@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+ [16.09.2026 2:18] Abdulaziz: <!DOCTYPE html>
 <html lang="uz">
 
 <head>
@@ -14,20 +14,17 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-
     <style>
 
         * {
             box-sizing: border-box;
         }
 
-
         body {
             margin: 0;
             background: white;
             font-family: Arial, sans-serif;
         }
-
 
         .container {
             width: 92%;
@@ -36,13 +33,11 @@
             padding: 40px 10px;
         }
 
-
         h1 {
             text-align: center;
             font-size: 25px;
             margin-bottom: 30px;
         }
-
 
         input {
             width: 100%;
@@ -53,12 +48,6 @@
             margin-bottom: 15px;
             outline: none;
         }
-
-
-        input:focus {
-            border-color: #2481cc;
-        }
-
 
         button {
             width: 100%;
@@ -71,16 +60,9 @@
             cursor: pointer;
         }
 
-
-        button:active {
-            opacity: 0.8;
-        }
-
-
         .hidden {
             display: none;
         }
-
 
         .question-number {
             font-size: 17px;
@@ -88,13 +70,11 @@
             margin-bottom: 15px;
         }
 
-
         .question {
             font-size: 19px;
             line-height: 1.5;
             margin-bottom: 25px;
         }
-
 
         .option {
             width: 100%;
@@ -107,13 +87,11 @@
             text-align: left;
         }
 
-
         .option.selected {
             background: #2481cc;
             color: white;
             border-color: #2481cc;
         }
-
 
         .navigation {
             display: flex;
@@ -121,11 +99,9 @@
             margin-top: 25px;
         }
 
-
         .navigation button {
             flex: 1;
         }
-
 
         .timer {
             text-align: center;
@@ -133,7 +109,6 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-
 
         .answer-input {
             width: 100%;
@@ -154,7 +129,7 @@
 <div class="container">
 
 
-    <!-- TEST KODI -->
+    <!-- KOD KIRITISH -->
 
     <div id="codePage">
 
@@ -162,13 +137,11 @@
             Biologiya testi
         </h1>
 
-
         <input
             type="text"
             id="testCode"
             placeholder="Test kodini kiriting"
         >
-
 
         <button
             type="button"
@@ -180,14 +153,12 @@
     </div>
 
 
-
-    <!-- TEST SAHIFASI -->
+    <!-- TEST -->
 
     <div
         id="testPage"
         class="hidden"
     >
-
 
         <div
             class="timer"
@@ -196,24 +167,17 @@
             Vaqt: 60:00
         </div>
 
-
         <div
             class="question-number"
             id="questionNumber"
-        >
-        </div>
-
+        ></div>
 
         <div
             class="question"
             id="questionText"
-        >
-        </div>
+        ></div>
 
-
-        <div id="answerArea">
-        </div>
-
+        <div id="answerArea"></div>
 
         <div class="navigation">
 
@@ -223,7 +187,6 @@
             >
                 ← Oldingi
             </button>
-
 
             <button
                 type="button"
@@ -237,7 +200,6 @@
     </div>
 
 
-
     <!-- NATIJA -->
 
     <div
@@ -249,10 +211,9 @@
             Test yakunlandi
         </h1>
 
+        <p id="resultText"></p>
 
-        <p id="resultText">
-        </p>
-[16.09.2026 1:18] Abdulaziz: <button
+        <button
             type="button"
             onclick="location.reload()"
         >
@@ -265,141 +226,113 @@
 </div>
 
 
-
 <script>
 
 
-/* =====================================
-   TELEGRAM WEB APP
-===================================== */
-
-
-if (
+/* TELEGRAM */
+[16.09.2026 2:18] Abdulaziz: if (
     window.Telegram &&
     Telegram.WebApp
 ) {
-
     Telegram.WebApp.ready();
-
 }
 
 
-
-/* =====================================
-   TEST SAVOLLARI
-===================================== */
-
+/* TEST SAVOLLARI */
 
 const questions = [
 
     {
-
         type: "single",
 
         question:
             "Fotosintez jarayonining yorug‘lik bosqichi qayerda kechadi?",
 
         options: [
-
             "Mitoxondriyada",
-
             "Tilakoid membranasida",
-
             "Sitoplazmada",
-
             "Yadroda"
-
         ],
 
         answer: 1
-
     },
 
 
     {
-
         type: "single",
 
         question:
             "Odam somatik hujayrasida nechta xromosoma mavjud?",
 
         options: [
-
             "23",
-
             "44",
-
             "46",
-
             "48"
-
         ],
 
         answer: 2
-
     },
 
 
     {
-
         type: "open",
 
         question:
             "Odamning normal somatik hujayrasidagi xromosomalar sonini kiriting.",
 
         answer: "46"
-
     }
 
 ];
 
 
-
-/* =====================================
-   O'ZGARUVCHILAR
-===================================== */
-
+/* O'ZGARUVCHILAR */
 
 let currentQuestion = 0;
 
 let userAnswers = [];
 
+let testCode = "";
 
 
-/* =====================================
-   TESTNI BOSHLASH
-===================================== */
-
+/* TESTNI BOSHLASH */
 
 function startTest() {
 
+    testCode =
+        document
+            .getElementById("testCode")
+            .value
+            .trim();
 
-    const code = document
-        .getElementById("testCode")
-        .value
-        .trim();
 
+    if (testCode === "") {
 
-    if (code === "") {
-
-        alert("Test kodini kiriting!"
+        alert(
+            "Test kodini kiriting!"
         );
 
         return;
-
     }
 
 
     document
         .getElementById("codePage")
-        .classList
-        .add("hidden");
+        .style
+        .display = "none";
 
 
     document
         .getElementById("testPage")
-        .classList
-        .remove("hidden");
+        .style
+        .display = "block";
+
+
+    currentQuestion = 0;
+
+    userAnswers = [];
 
 
     showQuestion();
@@ -407,14 +340,9 @@ function startTest() {
 }
 
 
-
-/* =====================================
-   SAVOLNI KO'RSATISH
-===================================== */
-
+/* SAVOLNI KO'RSATISH */
 
 function showQuestion() {
-
 
     const q =
         questions[currentQuestion];
@@ -444,15 +372,12 @@ function showQuestion() {
     area.innerHTML = "";
 
 
-
-    /* A/B/C/D SAVOL */
+    /* SINGLE CHOICE */
 
     if (q.type === "single") {
 
-
         q.options.forEach(
             function(option, index) {
-
 
                 const button =
                     document.createElement(
@@ -461,7 +386,6 @@ function showQuestion() {
 
 
                 button.type = "button";
-
 
                 button.className =
                     "option";
@@ -495,13 +419,10 @@ function showQuestion() {
         );
 
 
-        /* Oldingi tanlangan javobni ko'rsatish */
-
         if (
-            userAnswers[currentQuestion] !==
-            undefined
+            userAnswers[currentQuestion]
+            !== undefined
         ) {
-
 
             const buttons =
                 area.querySelectorAll(
@@ -520,11 +441,9 @@ function showQuestion() {
     }
 
 
-
     /* OCHIQ JAVOB */
 
     if (q.type === "open") {
-
 
         const input =
             document.createElement(
@@ -534,10 +453,11 @@ function showQuestion() {
 
         input.type = "text";
 
-
         input.className =
             "answer-input";
-[16.09.2026 1:18] Abdulaziz: input.placeholder =
+
+
+        input.placeholder =
             "Javobingizni kiriting";
 
 
@@ -551,7 +471,8 @@ function showQuestion() {
 
                 userAnswers[
                     currentQuestion
-                ] = input.value;
+                ] =
+                    input.value;
 
             };
 
@@ -565,17 +486,12 @@ function showQuestion() {
 }
 
 
-
-/* =====================================
-   VARIANT TANLASH
-===================================== */
-
+/* JAVOB TANLASH */
 
 function selectAnswer(
     index,
     button
 ) {
-
 
     userAnswers[
         currentQuestion
@@ -586,9 +502,7 @@ function selectAnswer(
         document.querySelectorAll(
             ".option"
         );
-
-
-    buttons.forEach(
+[16.09.2026 2:18] Abdulaziz: buttons.forEach(
         function(btn) {
 
             btn.classList.remove(
@@ -606,29 +520,22 @@ function selectAnswer(
 }
 
 
-
-/* =====================================
-   KEYINGI SAVOL
-===================================== */
-
+/* KEYINGI SAVOL */
 
 function nextQuestion() {
-
 
     if (
         currentQuestion <
         questions.length - 1
     ) {
 
-
         currentQuestion++;
-
 
         showQuestion();
 
+    }
 
-    } else {
-
+    else {
 
         finishTest();
 
@@ -637,22 +544,15 @@ function nextQuestion() {
 }
 
 
-
-/* =====================================
-   OLDINGI SAVOL
-===================================== */
-
+/* OLDINGI SAVOL */
 
 function previousQuestion() {
-
 
     if (
         currentQuestion > 0
     ) {
 
-
         currentQuestion--;
-
 
         showQuestion();
 
@@ -661,11 +561,7 @@ function previousQuestion() {
 }
 
 
-
-/* =====================================
-   TESTNI YAKUNLASH
-===================================== */
-
+/* TESTNI YAKUNLASH */
 
 function finishTest() {
 
@@ -673,14 +569,16 @@ function finishTest() {
     const resultData =
         JSON.stringify({
 
+            testCode:
+                testCode,
+
             answers:
                 userAnswers
 
         });
 
 
-
-    /* TELEGRAM ICHIDA OCHILGAN BO'LSA */
+    /* TELEGRAM WEB APP */
 
     if (
         window.Telegram &&
@@ -689,22 +587,16 @@ function finishTest() {
         "function"
     ) {
 
-
         Telegram.WebApp.sendData(
             resultData
         );
-
 
         return;
 
     }
 
 
-
-    /* TELEGRAMDAN TASHQARIDA
-       OCHILGAN BO'LSA
-    */
-
+    /* TELEGRAMDAN TASHQARIDA */
 
     let correct = 0;
 
@@ -716,7 +608,6 @@ function finishTest() {
             if (
                 q.type === "single"
             ) {
-
 
                 if (
                     userAnswers[index] ===
@@ -734,18 +625,14 @@ function finishTest() {
                 q.type === "open"
             ) {
 
-
                 if (
-
                     userAnswers[index] &&
-
                     userAnswers[index]
                         .trim()
                         .toLowerCase()
                     ===
                     q.answer
                         .toLowerCase()
-
                 ) {
 
                     correct++;
@@ -758,29 +645,24 @@ function finishTest() {
     );
 
 
-
     document
         .getElementById("testPage")
-        .classList
-        .add("hidden");
+        .style
+        .display = "none";
 
 
     document
         .getElementById("resultPage")
-        .classList
-        .remove("hidden");
+        .style
+        .display = "block";
 
 
     document
         .getElementById("resultText")
         .innerText =
-
             "To‘g‘ri javoblar: " +
-
             correct +
-
             " / " +
-
             questions.length;
 
 }
