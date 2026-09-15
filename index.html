@@ -344,43 +344,6 @@ function previousQuestion() {
 }
 
 
-function finishTest() 
-{
-let resultData = JSON.stringify({
-    answers: userAnswers
-});
-
-if (window.Telegram && Telegram.WebApp) {
-    Telegram.WebApp.sendData(resultData);
-}
-    let correct = 0;
-
-    questions.forEach(function(q, index) {
-
-        if (q.type === "single") {
-
-            if (userAnswers[index] === q.answer) {
-
-                correct++;
-
-            }
-
-        }
-
-
-        if (q.type === "open") {
-
-            if (
-                userAnswers[index] &&
-                userAnswers[index].trim().toLowerCase()
-                === q.answer.toLowerCase()
-            ) {
-
-                correct++;
-
-            }
-
-        }
 
     });
 
@@ -395,6 +358,55 @@ if (window.Telegram && Telegram.WebApp) {
         " / " +
         questions.length;
 
+}
+    function finishTest() {
+
+    let resultData = JSON.stringify({
+        answers: userAnswers
+    });
+
+    if (window.Telegram && Telegram.WebApp) {
+
+        Telegram.WebApp.sendData(resultData);
+
+        return;
+    }
+
+    let correct = 0;
+
+    questions.forEach(function(q, index) {
+
+        if (q.type === "single") {
+
+            if (userAnswers[index] === q.answer) {
+                correct++;
+            }
+
+        }
+
+        if (q.type === "open") {
+
+            if (
+                userAnswers[index] &&
+                userAnswers[index].trim().toLowerCase()
+                === q.answer.toLowerCase()
+            ) {
+                correct++;
+            }
+
+        }
+
+    });
+
+    document.getElementById("testPage").classList.add("hidden");
+
+    document.getElementById("resultPage").classList.remove("hidden");
+
+    document.getElementById("resultText").innerText =
+        "To‘g‘ri javoblar: " +
+        correct +
+        " / " +
+        questions.length;
 }
 
 </script>
