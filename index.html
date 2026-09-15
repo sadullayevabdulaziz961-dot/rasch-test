@@ -1,197 +1,394 @@
-{
-            type: "single",
-            question: "Odam somatik hujayrasida nechta xromosoma mavjud?",
-            options: [
-                "23",
-                "44",
-                "46",
-                "48"
-            ],
-            answer: 2
-        },
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologiya testi</title>
 
-        {
-            type: "open",
-            question: "Odamning normal somatik hujayrasidagi xromosomalar sonini kiriting.",
-            answer: "46"
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-    ];
-
-
-    let currentQuestion = 0;
-    let userAnswers = [];
-
-
-    function startTest() {
-
-        let code = document.getElementById("testCode").value.trim();
-
-        if (code === "") {
-            alert("Test kodini kiriting!");
-            return;
+        body {
+            margin: 0;
+            background: white;
+            font-family: Arial, sans-serif;
         }
 
-        alert("Kod qabul qilindi!");
+        .container {
+            width: 92%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px 10px;
+        }
 
-        document.getElementById("codePage").classList.add("hidden");
-        document.getElementById("testPage").classList.remove("hidden");
+        h1 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 30px;
+        }
 
-        showQuestion();
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            border: none;
+            border-radius: 10px;
+            background: #2481cc;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question-number {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 19px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: white;
+            color: black;
+            text-align: left;
+        }
+
+        .option.selected {
+            background: #2481cc;
+            color: white;
+            border-color: #2481cc;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .navigation button {
+            flex: 1;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="codePage">
+
+        <h1>Biologiya testi</h1>
+
+        <input
+            type="text"
+            id="testCode"
+            placeholder="Test kodini kiriting"
+        >
+
+        <button onclick="startTest()">
+            TESTNI BOSHLASH
+        </button>
+
+    </div>
+
+
+    <div id="testPage" class="hidden">
+
+        <div class="timer" id="timer">
+            Vaqt: 60:00
+        </div>
+
+        <div class="question-number" id="questionNumber"></div>
+
+        <div class="question" id="questionText"></div>
+
+        <div id="answerArea"></div>
+
+        <div class="navigation">
+
+            <button onclick="previousQuestion()">
+                ← Oldingi
+            </button>
+
+            <button onclick="nextQuestion()">
+                Keyingi →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="resultPage" class="hidden">
+
+        <h1>Test yakunlandi</h1>
+
+        <p id="resultText"></p>
+
+        <button onclick="location.reload()">
+            QAYTA BOSHLASH
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+    {
+        type: "single",
+        question: "Fotosintez jarayonining yorug‘lik bosqichi qayerda kechadi?",
+        options: [
+            "Mitoxondriyada",
+            "Tilakoid membranasida",
+            "Sitoplazmada",
+            "Yadroda"
+        ],
+        answer: 1
+    },
+
+    {
+        type: "single",
+        question: "Odam somatik hujayrasida nechta xromosoma mavjud?",
+        options: [
+            "23",
+            "44",
+            "46",
+            "48"
+        ],
+        answer: 2
+    },{
+        type: "open",
+        question: "Odamning normal somatik hujayrasidagi xromosomalar sonini kiriting.",
+        answer: "46"
+    }
+
+];
+
+
+let currentQuestion = 0;
+let userAnswers = [];
+
+
+function startTest() {
+
+    let code = document.getElementById("testCode").value.trim();
+
+    if (code === "") {
+        alert("Test kodini kiriting!");
+        return;
+    }
+
+    alert("Kod qabul qilindi!");
+
+    document.getElementById("codePage").classList.add("hidden");
+
+    document.getElementById("testPage").classList.remove("hidden");
+
+    showQuestion();
+}
+
+
+function showQuestion() {
+
+    let q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").innerText =
+        "Savol " + (currentQuestion + 1) +
+        " / " + questions.length;
+
+    document.getElementById("questionText").innerText =
+        q.question;
+
+    let area = document.getElementById("answerArea");
+
+    area.innerHTML = "";
+
+
+    if (q.type === "single") {
+
+        q.options.forEach(function(option, index) {
+
+            let button = document.createElement("button");
+
+            button.className = "option";
+
+            button.innerText =
+                String.fromCharCode(65 + index) +
+                ") " +
+                option;
+
+            button.onclick = function() {
+
+                selectAnswer(index, button);
+
+            };
+
+            area.appendChild(button);
+
+        });
+
     }
 
 
-    function showQuestion() {
+    if (q.type === "open") {
 
-        let q = questions[currentQuestion];
+        let input = document.createElement("input");
 
-        document.getElementById("questionNumber").innerText =
-            "Savol " + (currentQuestion + 1) +
-            " / " + questions.length;
+        input.className = "answer-input";
 
-        document.getElementById("questionText").innerText =
-            q.question;
+        input.placeholder = "Javobingizni kiriting";
 
-        let area = document.getElementById("answerArea");
+        input.value = userAnswers[currentQuestion] || "";
 
-        area.innerHTML = "";
+        input.oninput = function() {
+
+            userAnswers[currentQuestion] = input.value;
+
+        };
+
+        area.appendChild(input);
+
+    }
+
+}
 
 
-        /*
-           4 VARIANTLI TEST
-        */
+function selectAnswer(index, button) {
+
+    userAnswers[currentQuestion] = index;
+
+    let buttons =
+        document.querySelectorAll(".option");
+
+    buttons.forEach(function(btn) {
+
+        btn.classList.remove("selected");
+
+    });
+
+    button.classList.add("selected");
+
+}
+
+
+function nextQuestion() {
+
+    if (currentQuestion < questions.length - 1) {
+
+        currentQuestion++;
+
+        showQuestion();
+
+    } else {
+
+        finishTest();
+
+    }
+
+}
+
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        showQuestion();
+
+    }
+
+}
+
+
+function finishTest() {
+
+    let correct = 0;
+
+    questions.forEach(function(q, index) {
 
         if (q.type === "single") {
 
-            q.options.forEach((option, index) => {
+            if (userAnswers[index] === q.answer) {
 
-                let button = document.createElement("button");
+                correct++;
 
-                button.className = "option";
-                button.innerText =
-                    String.fromCharCode(65 + index) + ") " + option;
-
-                button.onclick = function() {
-                    selectAnswer(index, button);
-                };
-
-                area.appendChild(button);
-
-            });
+            }
 
         }
 
-
-        /*
-           OCHIQ TEST
-        */
 
         if (q.type === "open") {
 
-            let input = document.createElement("input");
+            if (
+                userAnswers[index] &&
+                userAnswers[index].trim().toLowerCase()
+                === q.answer.toLowerCase()
+            ) {
 
-            input.className = "answer-input";
-
-            input.placeholder = "Javobingizni kiriting";
-
-            input.value = userAnswers[currentQuestion] || "";
-
-            input.oninput = function() {
-                userAnswers[currentQuestion] = input.value;
-            };
-
-            area.appendChild(input);
-
-        }
-
-    }
-
-
-    function selectAnswer(index, button) {
-
-        userAnswers[currentQuestion] = index;
-
-        let buttons =
-            document.querySelectorAll(".option");
-
-        buttons.forEach(function(btn) {
-            btn.classList.remove("selected");
-        });
-
-        button.classList.add("selected");
-    }
-
-
-    function nextQuestion() {
-
-        if (currentQuestion < questions.length - 1) {
-
-            currentQuestion++;
-
-            showQuestion();
-
-        } else {
-
-            finishTest();
-
-        }
-
-    }
-
-
-    function previousQuestion() {
-
-        if (currentQuestion > 0) {
-
-            currentQuestion--;
-
-            showQuestion();
-
-        }
-
-    }
-
-
-    function finishTest() {
-
-        let correct = 0;
-
-        questions.forEach(function(q, index) {
-
-            if (q.type === "single") {
-
-                if (userAnswers[index] === q.answer) {
-                    correct++;
-                }
+                correct++;
 
             }
 
-            if (q.type === "open") {
+        }
 
-                if (
-                    userAnswers[index] &&
-                    userAnswers[index].trim().toLowerCase()
-                    === q.answer.toLowerCase()
-                ) {
-                    correct++;
-                }
-
-            }
-
-        });
+    });
 
 
-        document.getElementById("testPage").classList.add("hidden");
+    document.getElementById("testPage").classList.add("hidden");
 
-        document.getElementById("resultPage").classList.remove("hidden");
+    document.getElementById("resultPage").classList.remove("hidden");
 
-        document.getElementById("resultText").innerText =
-            "To‘g‘ri javoblar: " +
-            correct +
-            " / " +
-            questions.length;
+    document.getElementById("resultText").innerText =
+        "To‘g‘ri javoblar: " +
+        correct +
+        " / " +
+        questions.length;
 
-    }
+}
 
 </script>
 
