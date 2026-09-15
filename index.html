@@ -1,20 +1,33 @@
-<!DOCTYPE html>
+[16.09.2026 1:18] Abdulaziz: <!DOCTYPE html>
 <html lang="uz">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Biologiya testi</title>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+
     <style>
+
         * {
             box-sizing: border-box;
         }
+
 
         body {
             margin: 0;
             background: white;
             font-family: Arial, sans-serif;
         }
+
 
         .container {
             width: 92%;
@@ -23,11 +36,13 @@
             padding: 40px 10px;
         }
 
+
         h1 {
             text-align: center;
             font-size: 25px;
             margin-bottom: 30px;
         }
+
 
         input {
             width: 100%;
@@ -38,6 +53,12 @@
             margin-bottom: 15px;
             outline: none;
         }
+
+
+        input:focus {
+            border-color: #2481cc;
+        }
+
 
         button {
             width: 100%;
@@ -50,9 +71,16 @@
             cursor: pointer;
         }
 
+
+        button:active {
+            opacity: 0.8;
+        }
+
+
         .hidden {
             display: none;
         }
+
 
         .question-number {
             font-size: 17px;
@@ -60,11 +88,13 @@
             margin-bottom: 15px;
         }
 
+
         .question {
             font-size: 19px;
             line-height: 1.5;
             margin-bottom: 25px;
         }
+
 
         .option {
             width: 100%;
@@ -77,11 +107,13 @@
             text-align: left;
         }
 
+
         .option.selected {
             background: #2481cc;
             color: white;
             border-color: #2481cc;
         }
+
 
         .navigation {
             display: flex;
@@ -89,9 +121,11 @@
             margin-top: 25px;
         }
 
+
         .navigation button {
             flex: 1;
         }
+
 
         .timer {
             text-align: center;
@@ -100,6 +134,7 @@
             margin-bottom: 20px;
         }
 
+
         .answer-input {
             width: 100%;
             padding: 14px;
@@ -107,16 +142,26 @@
             border: 1px solid #ccc;
             border-radius: 10px;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
+
+    <!-- TEST KODI -->
 
     <div id="codePage">
 
-        <h1>Biologiya testi</h1>
+        <h1>
+            Biologiya testi
+        </h1>
+
 
         <input
             type="text"
@@ -124,32 +169,66 @@
             placeholder="Test kodini kiriting"
         >
 
-        <button onclick="startTest()">
+
+        <button
+            type="button"
+            onclick="startTest()"
+        >
             TESTNI BOSHLASH
         </button>
 
     </div>
 
 
-    <div id="testPage" class="hidden">
 
-        <div class="timer" id="timer">
+    <!-- TEST SAHIFASI -->
+
+    <div
+        id="testPage"
+        class="hidden"
+    >
+
+
+        <div
+            class="timer"
+            id="timer"
+        >
             Vaqt: 60:00
         </div>
 
-        <div class="question-number" id="questionNumber"></div>
 
-        <div class="question" id="questionText"></div>
+        <div
+            class="question-number"
+            id="questionNumber"
+        >
+        </div>
 
-        <div id="answerArea"></div>
+
+        <div
+            class="question"
+            id="questionText"
+        >
+        </div>
+
+
+        <div id="answerArea">
+        </div>
+
 
         <div class="navigation">
 
-            <button onclick="previousQuestion()">
+            <button
+                type="button"
+                onclick="previousQuestion()"
+            >
                 ← Oldingi
             </button>
 
-            <button onclick="nextQuestion()">
+
+            <button
+                type="button"
+                onclick="nextQuestion()"
+            >
                 Keyingi →
             </button>
 
@@ -158,168 +237,400 @@
     </div>
 
 
-    <div id="resultPage" class="hidden">
 
-        <h1>Test yakunlandi</h1>
+    <!-- NATIJA -->
 
-        <p id="resultText"></p>
+    <div
+        id="resultPage"
+        class="hidden"
+    >
 
-        <button onclick="location.reload()">
+        <h1>
+            Test yakunlandi
+        </h1>
+
+
+        <p id="resultText">
+        </p>
+[16.09.2026 1:18] Abdulaziz: <button
+            type="button"
+            onclick="location.reload()"
+        >
             QAYTA BOSHLASH
         </button>
 
     </div>
 
+
 </div>
+
 
 
 <script>
 
+
+/* =====================================
+   TELEGRAM WEB APP
+===================================== */
+
+
+if (
+    window.Telegram &&
+    Telegram.WebApp
+) {
+
+    Telegram.WebApp.ready();
+
+}
+
+
+
+/* =====================================
+   TEST SAVOLLARI
+===================================== */
+
+
 const questions = [
 
     {
+
         type: "single",
-        question: "Fotosintez jarayonining yorug‘lik bosqichi qayerda kechadi?",
+
+        question:
+            "Fotosintez jarayonining yorug‘lik bosqichi qayerda kechadi?",
+
         options: [
+
             "Mitoxondriyada",
+
             "Tilakoid membranasida",
+
             "Sitoplazmada",
+
             "Yadroda"
+
         ],
+
         answer: 1
+
     },
 
+
     {
+
         type: "single",
-        question: "Odam somatik hujayrasida nechta xromosoma mavjud?",
+
+        question:
+            "Odam somatik hujayrasida nechta xromosoma mavjud?",
+
         options: [
+
             "23",
+
             "44",
+
             "46",
+
             "48"
+
         ],
+
         answer: 2
-    },{
+
+    },
+
+
+    {
+
         type: "open",
-        question: "Odamning normal somatik hujayrasidagi xromosomalar sonini kiriting.",
+
+        question:
+            "Odamning normal somatik hujayrasidagi xromosomalar sonini kiriting.",
+
         answer: "46"
+
     }
 
 ];
 
 
+
+/* =====================================
+   O'ZGARUVCHILAR
+===================================== */
+
+
 let currentQuestion = 0;
+
 let userAnswers = [];
+
+
+
+/* =====================================
+   TESTNI BOSHLASH
+===================================== */
 
 
 function startTest() {
 
-    let code = document.getElementById("testCode").value.trim();
+
+    const code =
+        document
+        .getElementById("testCode")
+        .value
+        .trim();
+
 
     if (code === "") {
-        alert("Test kodini kiriting!");
+
+        alert(
+            "Test kodini kiriting!"
+        );
+
         return;
+
     }
 
-    document.getElementById("codePage").classList.add("hidden");
 
-    document.getElementById("testPage").classList.remove("hidden");
+    document
+        .getElementById("codePage")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("testPage")
+        .classList
+        .remove("hidden");
+
 
     showQuestion();
+
 }
+
+
+
+/* =====================================
+   SAVOLNI KO'RSATISH
+===================================== */
+
 
 function showQuestion() {
 
-    let q = questions[currentQuestion];
 
-    document.getElementById("questionNumber").innerText =
-        "Savol " + (currentQuestion + 1) +
-        " / " + questions.length;
+    const q =
+        questions[currentQuestion];
 
-    document.getElementById("questionText").innerText =
-        q.question;
 
-    let area = document.getElementById("answerArea");
+    document
+        .getElementById("questionNumber")
+        .innerText =
+            "Savol " +
+            (currentQuestion + 1) +
+            " / " +
+            questions.length;
+
+
+    document
+        .getElementById("questionText")
+        .innerText =
+            q.question;
+
+
+    const area =
+        document.getElementById(
+            "answerArea"
+        );
+
 
     area.innerHTML = "";
 
 
+
+    /* A/B/C/D SAVOL */
+
     if (q.type === "single") {
 
-        q.options.forEach(function(option, index) {
 
-            let button = document.createElement("button");
+        q.options.forEach(
+            function(option, index) {
 
-            button.className = "option";
 
-            button.innerText =
-                String.fromCharCode(65 + index) +
-                ") " +
-                option;
+                const button =
+                    document.createElement(
+                        "button"
+                    );
 
-            button.onclick = function() {
 
-                selectAnswer(index, button);
+                button.type = "button";
 
-            };
 
-            area.appendChild(button);
+                button.className =
+                    "option";
 
-        });
+
+                button.innerText =
+                    String.fromCharCode(
+                        65 + index
+                    ) +
+                    ") " +
+                    option;
+
+
+                button.onclick =
+                    function() {
+
+                        selectAnswer(
+                            index,
+                            button
+                        );
+
+                    };
+
+
+                area.appendChild(
+                    button
+                );
+
+
+            }
+        );
+
+
+        /* Oldingi tanlangan javobni ko'rsatish */
+
+        if (
+            userAnswers[currentQuestion] !==
+            undefined
+        ) {
+
+
+            const buttons =
+                area.querySelectorAll(
+                    ".option"
+                );
+
+
+            buttons[
+                userAnswers[currentQuestion]
+            ].classList.add(
+                "selected"
+            );
+
+        }
 
     }
 
+
+
+    /* OCHIQ JAVOB */
 
     if (q.type === "open") {
 
-        let input = document.createElement("input");
 
-        input.className = "answer-input";
+        const input =
+            document.createElement(
+                "input"
+            );
 
-        input.placeholder = "Javobingizni kiriting";
 
-        input.value = userAnswers[currentQuestion] || "";
+        input.type = "text";
 
-        input.oninput = function() {
 
-            userAnswers[currentQuestion] = input.value;
+        input.className =
+            "answer-input";
+[16.09.2026 1:18] Abdulaziz: input.placeholder =
+            "Javobingizni kiriting";
 
-        };
 
-        area.appendChild(input);
+        input.value =
+            userAnswers[currentQuestion]
+            || "";
+
+
+        input.oninput =
+            function() {
+
+                userAnswers[
+                    currentQuestion
+                ] = input.value;
+
+            };
+
+
+        area.appendChild(
+            input
+        );
 
     }
 
 }
 
 
-function selectAnswer(index, button) {
 
-    userAnswers[currentQuestion] = index;
+/* =====================================
+   VARIANT TANLASH
+===================================== */
 
-    let buttons =
-        document.querySelectorAll(".option");
 
-    buttons.forEach(function(btn) {
+function selectAnswer(
+    index,
+    button
+) {
 
-        btn.classList.remove("selected");
 
-    });
+    userAnswers[
+        currentQuestion
+    ] = index;
 
-    button.classList.add("selected");
+
+    const buttons =
+        document.querySelectorAll(
+            ".option"
+        );
+
+
+    buttons.forEach(
+        function(btn) {
+
+            btn.classList.remove(
+                "selected"
+            );
+
+        }
+    );
+
+
+    button.classList.add(
+        "selected"
+    );
 
 }
+
+
+
+/* =====================================
+   KEYINGI SAVOL
+===================================== */
 
 
 function nextQuestion() {
 
-    if (currentQuestion < questions.length - 1) {
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
 
         currentQuestion++;
 
+
         showQuestion();
 
+
     } else {
+
 
         finishTest();
 
@@ -328,11 +639,22 @@ function nextQuestion() {
 }
 
 
+
+/* =====================================
+   OLDINGI SAVOL
+===================================== */
+
+
 function previousQuestion() {
 
-    if (currentQuestion > 0) {
+
+    if (
+        currentQuestion > 0
+    ) {
+
 
         currentQuestion--;
+
 
         showQuestion();
 
@@ -342,71 +664,133 @@ function previousQuestion() {
 
 
 
-    });
+/* =====================================
+   TESTNI YAKUNLASH
+===================================== */
 
 
-    document.getElementById("testPage").classList.add("hidden");
+function finishTest() {
 
-    document.getElementById("resultPage").classList.remove("hidden");
 
-    document.getElementById("resultText").innerText =
-        "To‘g‘ri javoblar: " +
-        correct +
-        " / " +
-        questions.length;
+    const resultData =
+        JSON.stringify({
 
-}
-    function finishTest() {
+            answers:
+                userAnswers
 
-    let resultData = JSON.stringify({
-        answers: userAnswers
-    });
+        });
 
-    if (window.Telegram && Telegram.WebApp) {
 
-        Telegram.WebApp.sendData(resultData);
+
+    /* TELEGRAM ICHIDA OCHILGAN BO'LSA */
+
+    if (
+        window.Telegram &&
+        Telegram.WebApp &&
+        typeof Telegram.WebApp.sendData ===
+        "function"
+    ) {
+
+
+        Telegram.WebApp.sendData(
+            resultData
+        );
+
 
         return;
+
     }
+
+
+
+    /* TELEGRAMDAN TASHQARIDA
+       OCHILGAN BO'LSA
+    */
+
 
     let correct = 0;
 
-    questions.forEach(function(q, index) {
 
-        if (q.type === "single") {
+    questions.forEach(
+        function(q, index) {
 
-            if (userAnswers[index] === q.answer) {
-                correct++;
-            }
-
-        }
-
-        if (q.type === "open") {
 
             if (
-                userAnswers[index] &&
-                userAnswers[index].trim().toLowerCase()
-                === q.answer.toLowerCase()
+                q.type === "single"
             ) {
-                correct++;
+
+
+                if (
+                    userAnswers[index] ===
+                    q.answer
+                ) {
+
+                    correct++;
+
+                }
+
+            }
+
+
+            if (
+                q.type === "open"
+            ) {
+
+
+                if (
+
+                    userAnswers[index] &&
+
+                    userAnswers[index]
+                        .trim()
+                        .toLowerCase()
+                    ===
+                    q.answer
+                        .toLowerCase()
+
+                ) {
+
+                    correct++;
+
+                }
+
             }
 
         }
+    );
 
-    });
 
-    document.getElementById("testPage").classList.add("hidden");
 
-    document.getElementById("resultPage").classList.remove("hidden");
+    document
+        .getElementById("testPage")
+        .classList
+        .add("hidden");
 
-    document.getElementById("resultText").innerText =
-        "To‘g‘ri javoblar: " +
-        correct +
-        " / " +
-        questions.length;
+
+    document
+        .getElementById("resultPage")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("resultText")
+        .innerText =
+
+            "To‘g‘ri javoblar: " +
+
+            correct +
+
+            " / " +
+
+            questions.length;
+
 }
+
 
 </script>
 
+
 </body>
+
 </html>
